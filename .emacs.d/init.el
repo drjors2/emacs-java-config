@@ -1,0 +1,45 @@
+
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+	("melpa" . "https://melpa.org/packages/")
+	("melpa-stable" . "https://stable.melpa.org/packages/")))
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
+
+(when t (condition-case nil (require 'use-package)
+	  (file-error (require 'package)
+		      (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+		      (package-initialize)
+		      (package-refresh-contents)
+		      (package-install 'use-package)
+		      (setq use-package-always-ensure t)
+		      (require 'use-package)))
+      (use-package projectile :ensure t)
+      (use-package flycheck :ensure t)
+      (use-package yasnippet :config (yas-global-mode)
+	:ensure t)
+      (use-package lsp-mode :hook ((lsp-mode . lsp-enable-which-key-integration))
+	:ensure t)
+      (use-package hydra :ensure t)
+      (use-package company :ensure t)
+      (use-package lsp-ui :ensure t)
+      (use-package which-key :config (which-key-mode)
+	:ensure t)
+      (use-package lsp-java :config (add-hook 'java-mode-hook 'lsp)
+	:ensure t)
+      (use-package dap-mode :after lsp-mode :config (dap-auto-configure-mode)
+	:ensure t)
+      (use-package dap-java :ensure nil)
+      (use-package helm-lsp :ensure t)
+      (use-package helm :config (helm-mode)
+	:ensure t)
+      (use-package lsp-treemacs :ensure t)
+      (use-package sweet-theme :ensure t :config (load-theme 'sweet))
+      (use-package lispy :ensure t)
+      (use-package magit :ensure t)
+      ;; 
+      )
+
+
+
